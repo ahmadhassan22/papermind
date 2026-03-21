@@ -1,6 +1,8 @@
-# RAG Document Retrieval API
+# RAG Document Q&A System | FastAPI, Python, ChromaDB, Sentence Transformers, Ollama, Streamlit
 
-A modular FastAPI backend for document ingestion, semantic retrieval, and retrieval-augmented question answering over uploaded PDF files.
+- Built an end-to-end RAG-based document question answering system with FastAPI backend, ChromaDB vector storage, and Streamlit frontend.
+- Implemented PDF ingestion, text chunking, embedding generation, semantic retrieval, and local LLM-based answer generation using Ollama.
+- Designed modular API routes and backend services for document upload, retrieval, and query handling, with interactive testing via Swagger UI.
 
 ## Features
 - Upload PDF documents via API
@@ -52,6 +54,12 @@ python run.py
 
 3. Open Swagger UI
 http://127.0.0.1:8000/docs
+
+## Demo UI
+A simple Streamlit frontend is included for uploading PDF files and asking questions over the indexed document.
+
+Run:
+streamlit run frontend/app.py
 
 ## Screenshots
 
