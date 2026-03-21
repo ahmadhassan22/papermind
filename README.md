@@ -57,6 +57,8 @@ http://127.0.0.1:8000/docs
 
 ## Demo UI
 A simple Streamlit frontend is included for uploading PDF files and asking questions over the indexed document.
+- FastAPI backend must run first
+- then Streamlit frontend
 
 Run:
 streamlit run frontend/app.py
