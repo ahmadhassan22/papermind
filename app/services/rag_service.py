@@ -1,6 +1,6 @@
 import re
 from groq import Groq
-from app.services.retrieval_service import get_retriever
+from app.services.hybrid_retrieval_service import hybrid_retrieve
 from app.services.rerank_service import rerank
 from app.core.config import GROQ_API_KEY, GROQ_MODEL
 
@@ -18,9 +18,7 @@ def clean_text(text: str, max_length: int = 300) -> str:
     return text
 
 def answer_question(question: str):
-    retriever = get_retriever()
-    docs = retriever.invoke(question)
-
+    docs = hybrid_retrieve(question, top_k=20)
     docs = rerank(question, docs, top_k=5)
 
     context_parts = []
