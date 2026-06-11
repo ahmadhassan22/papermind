@@ -1,5 +1,6 @@
 from pathlib import Path
 from langchain_community.document_loaders import PyPDFLoader
+from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
@@ -13,9 +14,28 @@ def get_embedding_model():
         _embedding_model = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL)
     return _embedding_model
 
-def ingest_pdf(file_path: Path) -> None:
-    loader = PyPDFLoader(str(file_path))
-    docs = loader.load()
+def load_document(file_path: Path) -> list:
+    suffix = file_path.suffix.lower()
+
+    if suffix == ".pdf":
+        loader = PyPDFLoader(str(file_path))
+        return loader.load()
+
+    elif suffix == ".docx":
+        import docx
+        doc = docx.Document(str(file_path))
+        text = "\n".join([para.text for para in doc.paragraphs if para.text.strip()])
+        return [Document(page_content=text, metadata={"source": str(file_path), "page": 0})]
+
+    elif suffix in [".md", ".txt"]:
+        text = file_path.read_text(encoding="utf-8-sig")
+        return [Document(page_content=text, metadata={"source": str(file_path), "page": 0})]
+
+    else:
+        raise ValueError(f"Unsupported file type: {suffix}")
+
+def ingest_document(file_path: Path) -> None:
+    docs = load_document(file_path)
 
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,

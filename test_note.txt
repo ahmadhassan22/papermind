@@ -1,0 +1,1 @@
+﻿Urdu is a low-resource language. Reasoning benchmarks for Urdu are scarce. URBench aims to evaluate LLM reasoning in Urdu across multiple datasets.
