@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from app.routes import health, upload, query
+import os
 
 app = FastAPI(
     title="Papermind API",
@@ -20,10 +23,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-def root():
-    return {"message": "Papermind backend is running"}
-
 app.include_router(health.router)
 app.include_router(upload.router)
 app.include_router(query.router)
+
+STATIC_DIR = os.path.join(os.path.dirname(__file__), "..", "frontend-react", "dist")
+
+if os.path.exists(STATIC_DIR):
+    app.mount("/assets", StaticFiles(directory=os.path.join(STATIC_DIR, "assets")), name="assets")
+
+    @app.get("/")
+    def serve_frontend():
+        return FileResponse(os.path.join(STATIC_DIR, "index.html"))
+else:
+    @app.get("/")
+    def root():
+        return {"message": "Papermind backend is running"}
