@@ -13,12 +13,11 @@ WORKDIR /app
 COPY requirements.txt .
 
 RUN python -m pip install --upgrade pip && \
-    python -m pip install --timeout 180 --retries 10 --no-cache-dir \
+    python -m pip install --no-cache-dir \
     torch --index-url https://download.pytorch.org/whl/cpu && \
-    python -m pip install --timeout 180 --retries 10 --no-cache-dir \
-    -i https://pypi.tuna.tsinghua.edu.cn/simple \
+    python -m pip install --no-cache-dir \
     -r requirements.txt && \
-    python -m pip install --timeout 180 --retries 10 --no-cache-dir \
+    python -m pip install --no-cache-dir \
     aiofiles
 
 COPY . .
