@@ -1,4 +1,5 @@
 from langchain_chroma import Chroma
+from langchain_core.documents import Document
 from app.services.ingest_service import get_embedding_model
 from app.core.config import CHROMA_DIR
 from rank_bm25 import BM25Okapi
@@ -23,14 +24,11 @@ def bm25_search(query: str, documents: list, metadatas: list, top_k: int = 20) -
     return [(documents[i], metadatas[i], scores[i]) for i in top_indices]
 
 def reciprocal_rank_fusion(dense_docs, bm25_results, k: int = 60) -> list:
-    from langchain_core.documents import Document
     scores = {}
-
     for rank, doc in enumerate(dense_docs):
         key = doc.page_content[:100]
         scores[key] = scores.get(key, {"doc": doc, "score": 0})
         scores[key]["score"] += 1 / (k + rank + 1)
-
     for rank, (text, metadata, _) in enumerate(bm25_results):
         key = text[:100]
         if key not in scores:
@@ -39,7 +37,6 @@ def reciprocal_rank_fusion(dense_docs, bm25_results, k: int = 60) -> list:
                 "score": 0
             }
         scores[key]["score"] += 1 / (k + rank + 1)
-
     sorted_results = sorted(scores.values(), key=lambda x: x["score"], reverse=True)
     return [item["doc"] for item in sorted_results]
 

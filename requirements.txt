@@ -7,7 +7,6 @@ langchain-chroma
 langchain-huggingface
 langchain-text-splitters
 chromadb==0.5.23
-sentence-transformers
 pypdf
 groq
 python-dotenv
@@ -15,3 +14,4 @@ rank-bm25
 python-docx
 aiofiles
 numpy
+requests
