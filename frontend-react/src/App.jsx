@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
 
-const API = "http://localhost:8000";
+const API = window.location.origin;
 
 export default function App() {
   const [documents, setDocuments] = useState([]);
