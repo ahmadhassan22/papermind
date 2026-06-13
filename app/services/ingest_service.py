@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
@@ -5,11 +6,11 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
 from langchain_core.embeddings import Embeddings
 import requests
-from app.core.config import CHROMA_DIR, JINA_API_KEY
+from app.core.config import CHROMA_DIR
 
 class JinaEmbeddings(Embeddings):
     def __init__(self):
-        self.api_key = JINA_API_KEY
+        self.api_key = os.environ.get("JINA_API_KEY")
         self.url = "https://api.jina.ai/v1/embeddings"
         self.model = "jina-embeddings-v3"
         self.headers = {

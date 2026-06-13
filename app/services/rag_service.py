@@ -1,15 +1,17 @@
 import re
+import os
 from groq import Groq
 from app.services.hybrid_retrieval_service import hybrid_retrieve
 from app.services.rerank_service import rerank
-from app.core.config import GROQ_API_KEY, GROQ_MODEL
+from app.core.config import GROQ_MODEL
 
 _client = None
 
 def get_client():
     global _client
     if _client is None:
-        _client = Groq(api_key=GROQ_API_KEY)
+        api_key = os.environ.get("GROQ_API_KEY")
+        _client = Groq(api_key=api_key)
     return _client
 
 def clean_text(text: str, max_length: int = 300) -> str:
