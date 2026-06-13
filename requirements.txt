@@ -3,6 +3,7 @@ uvicorn
 python-multipart
 langchain
 langchain-community
+langchain-chroma
 langchain-huggingface
 langchain-text-splitters
 chromadb==0.5.23
@@ -13,3 +14,4 @@ python-dotenv
 rank-bm25
 python-docx
 aiofiles
+numpy

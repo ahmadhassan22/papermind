@@ -1,4 +1,4 @@
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 from app.core.config import CHROMA_DIR
 from app.services.ingest_service import get_embedding_model
 

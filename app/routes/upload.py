@@ -4,7 +4,7 @@ from app.models.schemas import UploadResponse
 from app.core.config import UPLOAD_DIR, CHROMA_DIR
 from app.utils.file_utils import save_upload_file
 from app.services.ingest_service import ingest_document
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 from app.services.ingest_service import get_embedding_model
 
 router = APIRouter()
