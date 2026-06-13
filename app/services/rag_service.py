@@ -4,7 +4,13 @@ from app.services.hybrid_retrieval_service import hybrid_retrieve
 from app.services.rerank_service import rerank
 from app.core.config import GROQ_API_KEY, GROQ_MODEL
 
-client = Groq(api_key=GROQ_API_KEY)
+_client = None
+
+def get_client():
+    global _client
+    if _client is None:
+        _client = Groq(api_key=GROQ_API_KEY)
+    return _client
 
 def clean_text(text: str, max_length: int = 300) -> str:
     text = re.sub(r'-\s*\n\s*', '', text)
@@ -57,7 +63,7 @@ Question:
 Answer:"""
 
     try:
-        response = client.chat.completions.create(
+        response = get_client().chat.completions.create(
             model=GROQ_MODEL,
             messages=[{"role": "user", "content": prompt}],
             temperature=0.2,
