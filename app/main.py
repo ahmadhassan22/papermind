@@ -13,12 +13,8 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:8501",
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-    ],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -33,9 +29,11 @@ if os.path.exists(STATIC_DIR):
     app.mount("/assets", StaticFiles(directory=os.path.join(STATIC_DIR, "assets")), name="assets")
 
     @app.get("/")
+    @app.head("/")
     def serve_frontend():
         return FileResponse(os.path.join(STATIC_DIR, "index.html"))
 else:
     @app.get("/")
+    @app.head("/")
     def root():
         return {"message": "Papermind backend is running"}
