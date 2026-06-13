@@ -7,6 +7,9 @@ Built by Ahmad Hassan — Master's student in AI & NLP at Harbin Institute of Te
 ## 🔗 Live Demo
 **[https://papermind-5fen.onrender.com](https://papermind-5fen.onrender.com)**
 
+## 🎥 Demo Video
+**[Watch on Loom](https://www.loom.com/share/0a40e1e33e5444e2bd8b7bfce57a877d)**
+
 ---
 
 ## Problem Statement
