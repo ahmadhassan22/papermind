@@ -1,3 +1,11 @@
+FROM node:24-slim AS frontend-builder
+
+WORKDIR /frontend
+COPY frontend-react/package*.json ./
+RUN npm install
+COPY frontend-react/ ./
+RUN npm run build
+
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -9,9 +17,13 @@ RUN python -m pip install --upgrade pip && \
     torch --index-url https://download.pytorch.org/whl/cpu && \
     python -m pip install --timeout 180 --retries 10 --no-cache-dir \
     -i https://pypi.tuna.tsinghua.edu.cn/simple \
-    -r requirements.txt
+    -r requirements.txt && \
+    python -m pip install --timeout 180 --retries 10 --no-cache-dir \
+    aiofiles
 
 COPY . .
+
+COPY --from=frontend-builder /frontend/dist ./frontend-react/dist
 
 RUN mkdir -p data/uploads data/chroma_db
 
