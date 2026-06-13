@@ -200,7 +200,7 @@ Single deployment, single URL, no CORS issues between frontend and backend. The 
 
 ## Screenshots
 
-![Swagger UI](screenshots/swagger_ui.png)
+![Frontend UI](screenshots/frontend_ui.png)
 ![Upload Success](screenshots/upload_success.png)
 ![Query with Citations](screenshots/query_with_citations.png)
 
